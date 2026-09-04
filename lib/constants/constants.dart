@@ -11,7 +11,7 @@ const kErrorColor = Color(0xFFF03738);
 const kDefaultPadding = 20.0;
 
 const kVersionn = '2.50.501';
-const kNameApp = 'Lili';
+const kNameApp = 'App_meals';
 
 const kImageDeliveryManDefault =
     'https://firebasestorage.googleapis.com/v0/b/resources-a24a1.appspot.com/o/category%2F113.png?alt=media';
@@ -21,19 +21,19 @@ const kImageClientDefault =
 const kImageCategoryAll =
     'https://firebasestorage.googleapis.com/v0/b/resources-a24a1.appspot.com/o/category%2F113.png?alt=media';
 
-const kSokect = 'https://api-lili.planck.biz';
-const kDomain = 'https://api-lili.planck.biz/api/';
+const kSokect = 'http://192.168.100.16:3000';
+const kDomain = 'http://192.168.100.16:3000/api/';
 
-const kCountryCode = 'EC';
-const kCoin = 'USD';
+const kCountryCode = 'MX';
+const kCoin = 'PMX';
 const kCoinDecimals = 2;
 
 //minimum purchase amount with card
 const kMinPurchaseAmountCard = 1;
 const kStripePublishableKey = 'pk_test_uM6MQGwNS1zFSEwGkdwOOjUd00Q6ikG9Ih';
 
-const klatitudeMap = -4.0236715;
-const klongitudeMap = -79.1978733;
+const klatitudeMap = 19.9970865;
+const klongitudeMap = -102.7190595;
 
 const kTargetWidthUser = 220;
 const kTargetWidthStore = 470;
