@@ -26,17 +26,20 @@ exports.AuthModule = AuthModule = __decorate([
         providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
         imports: [
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, session_entity_1.Session]),
-            passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),
+            passport_1.PassportModule.register({ defaultStrategy: "jwt" }),
             jwt_1.JwtModule.registerAsync({
                 imports: [],
                 inject: [],
                 useFactory: () => {
-                    return { secret: process.env.JWT_SECREAT, signOptions: { expiresIn: '1y' } };
-                }
+                    return {
+                        secret: process.env.JWT_SECREAT,
+                        signOptions: { expiresIn: "1y" },
+                    };
+                },
             }),
-            email_module_1.EmailModule
+            email_module_1.EmailModule,
         ],
-        exports: [typeorm_1.TypeOrmModule, jwt_strategy_1.JwtStrategy, passport_1.PassportModule, jwt_1.JwtModule]
+        exports: [typeorm_1.TypeOrmModule, jwt_strategy_1.JwtStrategy, passport_1.PassportModule, jwt_1.JwtModule],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

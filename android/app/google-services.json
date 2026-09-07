@@ -34,35 +34,6 @@
           ]
         }
       }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:196290759163:android:d8123f0824ed7d254ee35e",
-        "android_client_info": {
-          "package_name": "com.jhc_sistemas.ubereats"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "196290759163-ndbk6p51udg66g6f0tif9iac83enj26f.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAkKpEUuwFeb1LNxCnedk1p9URmji_1s1g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "196290759163-ndbk6p51udg66g6f0tif9iac83enj26f.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
     }
   ],
   "configuration_version": "1"

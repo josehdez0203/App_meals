@@ -1,4 +1,4 @@
-package com.jhc_sistemas.ubereats
+package com.jhc_sistemas.entregas
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
