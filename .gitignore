@@ -37,6 +37,10 @@ migrate_working_dir/
 /server/.env
 /server/entregas.json
 /server/bin/
+/server/build/
+/server/dist/
+/server/node_modules/
+/server/postgres/
 
 # Symbolication related
 app.*.symbols

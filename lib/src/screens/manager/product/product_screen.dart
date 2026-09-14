@@ -15,7 +15,7 @@ import 'package:app_meals/src/widgets/upload_file/upload_file.dart';
 import 'package:provider/provider.dart';
 
 class ProductScreen extends StatelessWidget {
-  ProductScreen(this.productsController, {super.key}) ;
+  ProductScreen(this.productsController, {super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ProductsController productsController;
@@ -34,8 +34,9 @@ class ProductScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Visibility(
-                  visible: productController.inAsyncCall,
-                  child: const LinearProgressIndicator()),
+                visible: productController.inAsyncCall,
+                child: const LinearProgressIndicator(),
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
@@ -43,10 +44,12 @@ class ProductScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         AvatarImage(
-                            width: 200,
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(kDefaultPadding * 0.5)),
-                            image: productController.companyProduct.image),
+                          width: 200,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(kDefaultPadding * 0.5),
+                          ),
+                          image: productController.companyProduct.image,
+                        ),
                         ElevatedButton(
                           onPressed: () async {
                             showDialog(
@@ -55,10 +58,11 @@ class ProductScreen extends StatelessWidget {
                               builder: (context) => UploadFile((image) async {
                                 productController.inAsyncCall = true;
                                 String imageUpload = await uploadFile(
-                                    image,
-                                    'product/${productsController.storeCompany.company.id}',
-                                    '${productsController.storeCompany.company.id}-${DateTime.now().toIso8601String()}',
-                                    kTargetWidthProduct);
+                                  image,
+                                  'product/${productsController.storeCompany.company.id}',
+                                  '${productsController.storeCompany.company.id}-${DateTime.now().toIso8601String()}',
+                                  kTargetWidthProduct,
+                                );
                                 productController.companyProduct.image =
                                     imageUpload;
                                 productController.inAsyncCall = false;
@@ -77,7 +81,7 @@ class ProductScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: kDefaultPadding),
                         GroupDropdown(productController),
-                        const SizedBox(height: kDefaultPadding),
+                        // const SizedBox(height: kDefaultPadding),
                         NameInput(productController: productController),
                         const SizedBox(height: kDefaultPadding),
                         DescriptionInput(productController: productController),
@@ -90,9 +94,10 @@ class ProductScreen extends StatelessWidget {
                 ),
               ),
               SaveButton(
-                  formKey: _formKey,
-                  productController: productController,
-                  productsController: productsController)
+                formKey: _formKey,
+                productController: productController,
+                productsController: productsController,
+              ),
             ],
           ),
         ),
