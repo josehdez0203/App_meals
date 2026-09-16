@@ -47,7 +47,7 @@ exports.AppModule = AppModule = __decorate([
                 database: process.env.DB_NAME,
                 entities: [],
                 autoLoadEntities: true,
-                synchronize: true,
+                synchronize: process.env.DB_SYNCHRONIZE === 'true',
             }),
             company_module_1.CompanyModule,
             common_module_1.CommonModule,
