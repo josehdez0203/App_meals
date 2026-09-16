@@ -40,7 +40,10 @@ import { RequestModule } from './manager/request/request.module';
       database: process.env.DB_NAME,
       entities: [],
       autoLoadEntities: true,
-      synchronize: true,
+      // El esquema vive en `db/init.sql` (versionado y montado en docker-compose).
+      // `synchronize` queda desactivado por defecto para no alterar el esquema en
+      // caliente; para volver al comportamiento anterior usa DB_SYNCHRONIZE=true.
+      synchronize: process.env.DB_SYNCHRONIZE === 'true',
     }),
     CompanyModule,
     CommonModule,
