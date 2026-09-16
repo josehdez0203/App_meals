@@ -11,3 +11,5 @@ services:
     container_name: jose
     volumes:
       - ./postgres:/var/lib/postgresql/data
+      # Esquema versionado. Solo se ejecuta al inicializar un volumen vacio.
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
