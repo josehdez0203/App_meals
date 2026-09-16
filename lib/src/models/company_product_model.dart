@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:app_meals/src/models/group_model.dart';
-
 CompanyProductModel companyProductModelFromJson(String str) =>
     CompanyProductModel.fromJson(json.decode(str));
 
@@ -16,7 +14,6 @@ class CompanyProductModel {
     this.image = '',
     this.type = 1,
     this.price = 0.0,
-    this.group,
   });
 
   int id;
@@ -25,7 +22,6 @@ class CompanyProductModel {
   String image;
   int type;
   double price;
-  GroupModel? group = GroupModel(id: 0);
 
   factory CompanyProductModel.fromJson(Map<String, dynamic> json) =>
       CompanyProductModel(
@@ -35,8 +31,6 @@ class CompanyProductModel {
         image: json["image"],
         type: json["type"],
         price: json["price"].toDouble(),
-        group:
-            json["group"] == null ? null : GroupModel.fromJson(json["group"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,7 +49,6 @@ class CompanyProductModel {
         "type": type,
         "price": price,
         "company": {"id": companyId},
-        "group": {"id": group!.id}
       });
 
   Object toHttpBodyUpdate() => jsonEncode({
@@ -64,6 +57,5 @@ class CompanyProductModel {
         "image": image.trim(),
         "type": type,
         "price": price,
-        "group": {"id": group!.id}
       });
 }

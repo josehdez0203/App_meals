@@ -9,7 +9,6 @@ import 'package:app_meals/src/screens/manager/product/widget/price_input.dart';
 import 'package:app_meals/src/screens/manager/product/widget/save_button.dart';
 import 'package:app_meals/src/screens/manager/products/products_controller.dart';
 import 'package:app_meals/src/widgets/avatar_image.dart';
-import 'package:app_meals/src/widgets/group_dropdown/group_dropdown.dart';
 import 'package:app_meals/src/widgets/modal_progress_hud.dart';
 import 'package:app_meals/src/widgets/upload_file/upload_file.dart';
 import 'package:provider/provider.dart';
@@ -80,8 +79,6 @@ class ProductScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: kDefaultPadding),
-                        GroupDropdown(productController),
-                        // const SizedBox(height: kDefaultPadding),
                         NameInput(productController: productController),
                         const SizedBox(height: kDefaultPadding),
                         DescriptionInput(productController: productController),
