@@ -13,9 +13,26 @@
 --     porque `DB_SYNCHRONIZE` queda desactivado por defecto.
 --   * Requiere PostGIS (los queries usan `ST_DistanceSphere` y `location::geometry`).
 --
--- Uso manual (sobre una base vacia):
---   psql -h localhost -U postgres -d jose -f db/init.sql
+-- Uso manual (crea la base si no existe y luego el esquema):
+--   psql -h localhost -U postgres -d postgres -f db/init.sql
 -- =============================================================================
+
+-- -----------------------------------------------------------------------------
+-- Base de datos
+-- -----------------------------------------------------------------------------
+-- Crea la base `jose` si no existe y se conecta a ella, de modo que el archivo
+-- sirva tanto en docker-entrypoint-initdb.d (donde psql ya viene conectado a
+-- `jose`) como si se ejecuta a mano contra la base `postgres`.
+--
+-- Nota: CREATE DATABASE no puede ejecutarse dentro de una transaccion ni de un
+-- bloque DO, por eso se usa \gexec (meta-comando de psql).
+
+SELECT format('CREATE DATABASE %I', 'jose')
+WHERE current_database() <> 'jose'
+  AND NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'jose')
+\gexec
+
+\connect jose
 
 SET search_path TO public;
 
