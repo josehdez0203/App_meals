@@ -1,0 +1,22 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    schema: "db/migrations"
+    queries: "db/queries"
+    gen:
+      go:
+        package: "store"
+        out: "internal/store"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_pointers_for_null_types: true
+        emit_empty_slices: true
+        overrides:
+          # uuid como string plano (evita pgtype.UUID en toda la API).
+          - db_type: "uuid"
+            go_type: "string"
+          # json como json.RawMessage para poder reenviarlo tal cual.
+          - db_type: "json"
+            go_type:
+              import: "encoding/json"
+              type: "RawMessage"

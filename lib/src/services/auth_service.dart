@@ -22,14 +22,14 @@ class AuthService {
   Future<bool> updatePasswor(String password) async {
     var client = http.Client();
     try {
-      final resp = await client.patch(Uri.parse('$kDomain$_urlUpdatePasswor'),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'Bearer ${prefs.token}',
-          },
-          body: jsonEncode({
-            "password": password,
-          }));
+      final resp = await client.patch(
+        Uri.parse('$kDomain$_urlUpdatePasswor'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${prefs.token}',
+        },
+        body: jsonEncode({"password": password}),
+      );
       if (resp.statusCode == 200) return true;
     } catch (err) {
       if (kDebugMode) {
@@ -44,14 +44,14 @@ class AuthService {
   Future<Map<String, dynamic>?> changeImage(String image) async {
     var client = http.Client();
     try {
-      final resp = await client.patch(Uri.parse('$kDomain$_urlUpdate'),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'Bearer ${prefs.token}',
-          },
-          body: jsonEncode({
-            "image": image,
-          }));
+      final resp = await client.patch(
+        Uri.parse('$kDomain$_urlUpdate'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${prefs.token}',
+        },
+        body: jsonEncode({"image": image}),
+      );
       Map<String, dynamic> decodedResp = json.decode(resp.body);
       return decodedResp;
     } catch (err) {
@@ -65,19 +65,24 @@ class AuthService {
   }
 
   Future<Map<String, dynamic>?> update(
-      String email, String fullName, String phone) async {
+    String email,
+    String fullName,
+    String phone,
+  ) async {
     var client = http.Client();
     try {
-      final resp = await client.patch(Uri.parse('$kDomain$_urlUpdate'),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'Bearer ${prefs.token}',
-          },
-          body: jsonEncode({
-            "email": email,
-            "fullName": fullName,
-            "phone": phone,
-          }));
+      final resp = await client.patch(
+        Uri.parse('$kDomain$_urlUpdate'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${prefs.token}',
+        },
+        body: jsonEncode({
+          "email": email,
+          "fullName": fullName,
+          "phone": phone,
+        }),
+      );
       Map<String, dynamic> decodedResp = json.decode(resp.body);
       return decodedResp;
     } catch (err) {
@@ -116,9 +121,7 @@ class AuthService {
     try {
       final resp = await client.patch(
         Uri.parse('$kDomain$_urlRecover/$email'),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
 
       return json.decode(resp.body);
@@ -135,11 +138,13 @@ class AuthService {
   Future<Map<String, dynamic>?> check() async {
     var client = http.Client();
     try {
-      final resp = await client
-          .patch(Uri.parse('$kDomain$_urlCheck/${prefs.idDevice}'), headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${prefs.token}',
-      });
+      final resp = await client.patch(
+        Uri.parse('$kDomain$_urlCheck/${prefs.idDevice}'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${prefs.token}',
+        },
+      );
       return json.decode(resp.body);
     } catch (err) {
       if (kDebugMode) {
@@ -153,18 +158,19 @@ class AuthService {
 
   Future<UserModel?> login(String email, String password) async {
     var client = http.Client();
+    debugPrint('login: $email, $password, $kDomain');
     try {
-      final resp = await client.post(Uri.parse('$kDomain$_urlLogin'),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode({
-            "email": email,
-            "password": password,
-            "idDevice": prefs.idDevice,
-            "tokenPush": prefs.tokenPush,
-          }));
-      if (resp.statusCode != 201) return null;
+      final resp = await client.post(
+        Uri.parse('$kDomain$_urlLogin'),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+          "idDevice": prefs.idDevice,
+          "tokenPush": prefs.tokenPush,
+        }),
+      );
+      if (resp.statusCode != 200) return null;
       Map<String, dynamic> decodedResp = json.decode(resp.body);
       UserModel user = UserModel.fromJson(decodedResp);
       return user;
@@ -179,21 +185,25 @@ class AuthService {
   }
 
   Future<Map<String, dynamic>?> google(
-      String idGoogle, String fullName, String email, String image) async {
+    String idGoogle,
+    String fullName,
+    String email,
+    String image,
+  ) async {
     var client = http.Client();
     try {
-      final resp = await client.post(Uri.parse('$kDomain$_urlGoogle'),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode({
-            "image": image,
-            "email": email,
-            "fullName": fullName,
-            "idDevice": prefs.idDevice,
-            "tokenPush": prefs.tokenPush,
-            "idGoogle": idGoogle,
-          }));
+      final resp = await client.post(
+        Uri.parse('$kDomain$_urlGoogle'),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: jsonEncode({
+          "image": image,
+          "email": email,
+          "fullName": fullName,
+          "idDevice": prefs.idDevice,
+          "tokenPush": prefs.tokenPush,
+          "idGoogle": idGoogle,
+        }),
+      );
       Map<String, dynamic> decodedResp = json.decode(resp.body);
       return decodedResp;
     } catch (err) {
@@ -207,21 +217,25 @@ class AuthService {
   }
 
   Future<Map<String, dynamic>?> register(
-      String email, String password, String fullName, String phone) async {
+    String email,
+    String password,
+    String fullName,
+    String phone,
+  ) async {
     var client = http.Client();
     try {
-      final resp = await client.post(Uri.parse('$kDomain$_urlRegister'),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode({
-            "email": email,
-            "password": password,
-            "fullName": fullName,
-            "phone": phone,
-            "idDevice": prefs.idDevice,
-            "tokenPush": prefs.tokenPush,
-          }));
+      final resp = await client.post(
+        Uri.parse('$kDomain$_urlRegister'),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+          "fullName": fullName,
+          "phone": phone,
+          "idDevice": prefs.idDevice,
+          "tokenPush": prefs.tokenPush,
+        }),
+      );
       Map<String, dynamic> decodedResp = json.decode(resp.body);
       return decodedResp;
     } catch (err) {
@@ -243,10 +257,7 @@ class AuthService {
           'Authorization': 'Bearer ${prefs.token}',
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode({
-          "idDevice": prefs.idDevice,
-          "tokenPush": tokenPush,
-        }),
+        body: jsonEncode({"idDevice": prefs.idDevice, "tokenPush": tokenPush}),
       );
       if (resp.statusCode == 201) return true;
     } catch (err) {

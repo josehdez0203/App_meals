@@ -21,6 +21,8 @@ const kImageClientDefault =
 const kImageCategoryAll =
     'https://firebasestorage.googleapis.com/v0/b/resources-a24a1.appspot.com/o/category%2F113.png?alt=media';
 
+// const kSokect = 'http://delivery.jhc-sistemas.com';
+// const kDomain = 'http://delivery.jhc-sistemas.com/api/';
 const kSokect = 'http://192.168.100.16:3000';
 const kDomain = 'http://192.168.100.16:3000/api/';
 
