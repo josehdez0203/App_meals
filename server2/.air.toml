@@ -1,0 +1,19 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+    cmd = "go build -o ./tmp/api ./cmd/api"
+    delay = 1000
+    entrypoint = ["./tmp/api"]
+    # "postgres" es el directorio de datos del contenedor: no se vigila (es
+    # ilegible para el usuario y solo genera ruido y errores de permisos).
+    exclude_dir = ["tmp", "vendor", ".cache", "bin", "postgres"]
+    include_ext = ["go", "sql", "yaml"]
+    kill_delay = "500ms"
+    stop_on_error = true
+
+[log]
+    time = true
+
+[screen]
+    clear_on_rebuild = true

@@ -54,6 +54,7 @@ class AccessController with ChangeNotifier {
     inAsyncCall = true;
     UserModel? user = await authService.login(email, password);
     inAsyncCall = false;
+    debugPrint('user: $user');
     if (user == null) return user;
 
     if (user.addresses.isNotEmpty) {
@@ -66,8 +67,12 @@ class AccessController with ChangeNotifier {
 
   Future<int> signup() async {
     inAsyncCall = true;
-    Map<String, dynamic>? decodedResp =
-        await authService.register(email, password, fullName, phone);
+    Map<String, dynamic>? decodedResp = await authService.register(
+      email,
+      password,
+      fullName,
+      phone,
+    );
     inAsyncCall = false;
     if (decodedResp == null) {
       return CodeError.unknown;
