@@ -1,3 +1,4 @@
+import 'package:app_meals/constants/types_constant.dart';
 import 'package:app_meals/src/models/request_model.dart';
 
 class CompanyModel {
@@ -40,7 +41,10 @@ class CompanyModel {
         open: json["open"],
         close: json["close"],
         categoryId: json["categoryId"],
-        type: json["type"],
+        // La API no devuelve `type`: la vista vw_company solo expone tiendas,
+        // por eso se asume tienda. Sin este valor por defecto el parseo fallaba
+        // con "type 'Null' is not a subtype of type 'int'".
+        type: json["type"] ?? TypesCompany.store,
         location: Location.fromJson(json["location"]),
       );
 

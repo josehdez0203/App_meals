@@ -6,6 +6,11 @@
     "sFeatured": "People love them",
 
     "tCategories": "Categories",
+    "bNewCategory": "New category",
+    "tEditCategory": "Edit category",
+    "hCategoryName": "Category name",
+    "hCategoryImage": "Image (URL)",
+    "mNoCategories": "No categories yet",
     "sTCategory": "Filter by category",
 
     "tCompanyTop": "The best rated",
@@ -23,6 +28,7 @@
     "tRegisterStore": "Register your store",
     "tTopUpBalance": "Top up balance",
     "tNotifications": "Notifications",
+    "tChangeRole": "Change role",
 
     "tab1": "Stores",
     "tab2": "On its way",
@@ -43,6 +49,7 @@
     "tClosingTime" : "CLOSING TIME",
 
     "lDeliveryFee": "Shipment",
+    "lManager": "Manager",
     "lAddedCart": "Added to cart",
     "lOrderBy": "Order by",
     "lDeliveryman": "Deliveryman",

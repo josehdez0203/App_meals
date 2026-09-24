@@ -44,6 +44,7 @@ class GoogleButtonController extends ChangeNotifier {
       }
       prefs.user = user;
       prefs.token = user.token;
+      prefs.setDefaultRole(user.roles);
       return user;
     } else if (decodedResp.containsKey('codeError')) {
       return decodedResp['codeError'];

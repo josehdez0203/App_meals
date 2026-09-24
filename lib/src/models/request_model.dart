@@ -1,4 +1,5 @@
 import 'package:app_meals/constants/constants.dart';
+import 'package:app_meals/constants/types_constant.dart';
 
 class RequestModel {
   RequestModel({
@@ -185,7 +186,10 @@ class Company {
 
   factory Company.fromJson(Map<String, dynamic> json) => Company(
         image: json["image"],
-        type: json["type"],
+        // La API solo manda image de la empresa; sin el valor por defecto el
+        // parseo de la peticion fallaba con "type 'Null' is not a subtype of
+        // type 'int'".
+        type: json["type"] ?? TypesCompany.store,
       );
 
   Map<String, dynamic> toJson() => {

@@ -23,9 +23,7 @@ class AddressService {
     try {
       final resp = await client.delete(
         Uri.parse('$kDomain$_urlRemove/${address.id}'),
-        headers: {
-          'Authorization': 'Bearer ${prefs.token}',
-        },
+        headers: {'Authorization': 'Bearer ${prefs.token}'},
       );
       if (resp.statusCode == 200) return true;
     } catch (err) {
@@ -43,9 +41,7 @@ class AddressService {
     try {
       final resp = await client.get(
         Uri.parse('$kDomain$_urlGeocode/$placeId'),
-        headers: {
-          'Authorization': 'Bearer ${prefs.token}',
-        },
+        headers: {'Authorization': 'Bearer ${prefs.token}'},
       );
       if (resp.statusCode != 200) return null;
       Map<String, dynamic> decodedResp = json.decode(resp.body);
@@ -62,18 +58,21 @@ class AddressService {
     return null;
   }
 
-  Future<List<PredictionModel>> autocomplete(String place,
-      {required double lt, required double lg}) async {
+  Future<List<PredictionModel>> autocomplete(
+    String place, {
+    required double lt,
+    required double lg,
+  }) async {
     List<PredictionModel> predictions = [];
 
     var client = http.Client();
+    debugPrint('autocomplete place: $place, lt: $lt, lg: $lg');
     try {
       final resp = await client.get(
         Uri.parse(
-            '$kDomain$_urlAutocomplete/$place?longitude=$lg&latitude=$lt'),
-        headers: {
-          'Authorization': 'Bearer ${prefs.token}',
-        },
+          '$kDomain$_urlAutocomplete/$place?longitude=$lg&latitude=$lt',
+        ),
+        headers: {'Authorization': 'Bearer ${prefs.token}'},
       );
       if (resp.statusCode != 200) return predictions;
       Map<String, dynamic> decodedResp = json.decode(resp.body);
@@ -96,9 +95,7 @@ class AddressService {
     try {
       final resp = await client.get(
         Uri.parse('$kDomain$_urlAddresses'),
-        headers: {
-          'Authorization': 'Bearer ${prefs.token}',
-        },
+        headers: {'Authorization': 'Bearer ${prefs.token}'},
       );
       if (resp.statusCode != 200) return addresses;
       Map<String, dynamic> decodedResp = json.decode(resp.body);
@@ -118,12 +115,14 @@ class AddressService {
   Future<AddressModel?> create(AddressModel address) async {
     var client = http.Client();
     try {
-      final resp = await client.post(Uri.parse('$kDomain$_urlCreate'),
-          headers: {
-            'Authorization': 'Bearer ${prefs.token}',
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: address.toHttpBody());
+      final resp = await client.post(
+        Uri.parse('$kDomain$_urlCreate'),
+        headers: {
+          'Authorization': 'Bearer ${prefs.token}',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: address.toHttpBody(),
+      );
 
       if (resp.statusCode != 201) return null;
 
@@ -142,13 +141,14 @@ class AddressService {
   Future<AddressModel?> update(AddressModel address) async {
     var client = http.Client();
     try {
-      final resp =
-          await client.patch(Uri.parse('$kDomain$_urlUpdate/${address.id}'),
-              headers: {
-                'Authorization': 'Bearer ${prefs.token}',
-                'Content-Type': 'application/json; charset=UTF-8',
-              },
-              body: address.toHttpBody());
+      final resp = await client.patch(
+        Uri.parse('$kDomain$_urlUpdate/${address.id}'),
+        headers: {
+          'Authorization': 'Bearer ${prefs.token}',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: address.toHttpBody(),
+      );
 
       if (resp.statusCode != 200) return null;
       Map<String, dynamic> decodedResp = json.decode(resp.body);

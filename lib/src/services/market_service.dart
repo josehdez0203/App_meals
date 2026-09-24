@@ -33,9 +33,7 @@ class MarketService {
     try {
       final resp = await client.get(
         Uri.parse('$kDomain$_urlOrders'),
-        headers: {
-          'Authorization': 'Bearer ${prefs.token}',
-        },
+        headers: {'Authorization': 'Bearer ${prefs.token}'},
       );
       if (resp.statusCode != 200) return orders;
       Map<String, dynamic> decodedResp = json.decode(resp.body);
@@ -86,7 +84,8 @@ class MarketService {
     try {
       final resp = await client.get(
         Uri.parse(
-            '$kDomain$_urlDeliveryCost/$companyIds?longitude=$lg&latitude=$lt&fromlt=$fromLtTaxi&fromlg=$fromLgTaxi&isSumaryTaxi=${isSumaryTaxi.toString()}'),
+          '$kDomain$_urlDeliveryCost/$companyIds?longitude=$lg&latitude=$lt&fromlt=$fromLtTaxi&fromlg=$fromLgTaxi&isSumaryTaxi=${isSumaryTaxi.toString()}',
+        ),
         headers: {'Authorization': 'Bearer ${prefs.token}'},
       );
       if (resp.statusCode != 200) return fees;
@@ -105,26 +104,35 @@ class MarketService {
   }
 
   Future<MarketCompaniesResponse> getCompanies(
-      CategoryModel selectedCategory, double lt, double lg,
-      {String filter = ''}) async {
+    CategoryModel selectedCategory,
+    double lt,
+    double lg, {
+    String filter = '',
+  }) async {
     List<ProductModel> products = [];
     List<CompanyModel> companies = [];
-
-    final String param =
-        selectedCategory.id > 0 ? '&categoryId=${selectedCategory.id}' : '';
+    debugPrint('getCompanies filter: $filter');
+    final String param = selectedCategory.id > 0
+        ? '&categoryId=${selectedCategory.id}'
+        : '';
     var client = http.Client();
     try {
       final resp = await client.get(
         Uri.parse(
-            '$kDomain$_urlCompanies?longitude=$lg&latitude=$lt$param&name=${filter.toUpperCase()}'),
+          '$kDomain$_urlCompanies?longitude=$lg&latitude=$lt$param&name=${filter.toUpperCase()}',
+        ),
       );
       if (resp.statusCode != 200) {
         return MarketCompaniesResponse(
-            companies: companies, products: products);
+          companies: companies,
+          products: products,
+        );
       }
       Map<String, dynamic> decodedResp = json.decode(resp.body);
+      debugPrint('Ok  $decodedResp');
 
       for (var item in decodedResp['companies']) {
+        debugPrint(item.toString());
         companies.add(CompanyModel.fromJson(item));
       }
 
@@ -150,6 +158,7 @@ class MarketService {
       final resp = await client.get(
         Uri.parse('$kDomain$_urlCategories?longitude=$lg&latitude=$lt'),
       );
+      debugPrint('MarketService getCategories: ${resp.body}');
       if (resp.statusCode != 200) return categories;
       Map<String, dynamic> decodedResp = json.decode(resp.body);
       for (var item in decodedResp['categories']) {
@@ -198,16 +207,21 @@ class MarketService {
   }
 
   Future<OrderModel?> buy(
-      CartSummaryModel cartSummary, AddressModel address, int payment) async {
+    CartSummaryModel cartSummary,
+    AddressModel address,
+    int payment,
+  ) async {
     OrderModel? orderModel;
     var client = http.Client();
     try {
-      final resp = await client.post(Uri.parse('$kDomain$_urlBuy'),
-          headers: {
-            'Authorization': 'Bearer ${prefs.token}',
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: cartSummary.toHttpBodyBuy(address, payment));
+      final resp = await client.post(
+        Uri.parse('$kDomain$_urlBuy'),
+        headers: {
+          'Authorization': 'Bearer ${prefs.token}',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: cartSummary.toHttpBodyBuy(address, payment),
+      );
       if (resp.statusCode != 200) return orderModel;
       Map<String, dynamic> decodedResp = json.decode(resp.body);
       orderModel = OrderModel.fromJson(decodedResp['order']);
@@ -224,13 +238,14 @@ class MarketService {
   Future<bool> qualify(OrderModel order) async {
     var client = http.Client();
     try {
-      final resp =
-          await client.patch(Uri.parse('$kDomain$_urlQualify/${order.id}'),
-              headers: {
-                'Authorization': 'Bearer ${prefs.token}',
-                'Content-Type': 'application/json; charset=UTF-8',
-              },
-              body: jsonEncode({"scoreClient": order.scoreClient}));
+      final resp = await client.patch(
+        Uri.parse('$kDomain$_urlQualify/${order.id}'),
+        headers: {
+          'Authorization': 'Bearer ${prefs.token}',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({"scoreClient": order.scoreClient}),
+      );
       if (resp.statusCode == 200) return true;
     } catch (err) {
       if (kDebugMode) {

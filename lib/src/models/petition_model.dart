@@ -44,7 +44,10 @@ class PetitionModel {
             json["products"].map((x) => Product.fromJson(x))),
         deliveryFee: json["deliveryFee"].toDouble(),
         total: json["total"].toDouble(),
-        start: Location.fromJson(json["start"]),
+        // La API no manda `start`: el punto de recogida es la tienda. Si
+        // tampoco viniera su ubicacion se usa 0,0 en vez de reventar.
+        start: Location.fromJson(
+            json["start"] ?? json["store"]?["location"] ?? {'x': 0.0, 'y': 0.0}),
         location: Location.fromJson(json["location"]),
         createdAt: DateTime.parse(json["createdAt"]),
         user: User.fromJson(json["user"]),

@@ -54,13 +54,15 @@ class _Tab1ScreenState extends State<Tab1Screen> with WidgetsBindingObserver {
       slivers: [
         SliverToBoxAdapter(
           child: Visibility(
-              visible: tab1Controller.inAsyncCall,
-              child: const LinearProgressIndicator()),
+            visible: tab1Controller.inAsyncCall,
+            child: const LinearProgressIndicator(),
+          ),
         ),
         const SliverToBoxAdapter(child: SizedBox(height: kDefaultPadding)),
         SliverToBoxAdapter(child: FilterInput(tab1Controller: tab1Controller)),
         const SliverToBoxAdapter(
-            child: SizedBox(height: kDefaultPadding * 0.3)),
+          child: SizedBox(height: kDefaultPadding * 0.3),
+        ),
         if (tab1Controller.inAsyncCall || tab1Controller.products.isNotEmpty)
           _products(tab1Controller),
         _categories(tab1Controller),
@@ -85,48 +87,44 @@ class _Tab1ScreenState extends State<Tab1Screen> with WidgetsBindingObserver {
 
   _categories(Tab1Controller tab1Controller) {
     return SliverList(
-      delegate: SliverChildListDelegate(
-        [
-          Label(S.of(context).tCategories, S.of(context).sTCategory),
-          ListCategory(tab1Controller.categories)
-        ],
-      ),
+      delegate: SliverChildListDelegate([
+        Label(S.of(context).tCategories, S.of(context).sTCategory),
+        ListCategory(tab1Controller.categories),
+      ]),
     );
   }
 
-  _companies(Tab1Controller tab1Controller, int start, int limit, String title,
-      String subTitle) {
+  _companies(
+    Tab1Controller tab1Controller,
+    int start,
+    int limit,
+    String title,
+    String subTitle,
+  ) {
     int length = tab1Controller.companies.length;
     int end = start + limit;
     if (end > length) end = length;
     if (start >= length) return SliverToBoxAdapter(child: Container());
     return SliverList(
-      delegate: SliverChildListDelegate(
-        [
-          Label(title, subTitle),
-          ListCompany(tab1Controller.companies.sublist(start, end))
-        ],
-      ),
+      delegate: SliverChildListDelegate([
+        Label(title, subTitle),
+        ListCompany(tab1Controller.companies.sublist(start, end)),
+      ]),
     );
   }
 
   _products(Tab1Controller tab1Controller) {
     return SliverList(
-      delegate: SliverChildListDelegate(
-        [
-          Label(S.of(context).tFeatured, S.of(context).sFeatured),
-          ListProducts(tab1Controller.products)
-        ],
-      ),
+      delegate: SliverChildListDelegate([
+        Label(S.of(context).tFeatured, S.of(context).sFeatured),
+        ListProducts(tab1Controller.products),
+      ]),
     );
   }
 }
 
 class SelectedAddress extends StatelessWidget {
-  const SelectedAddress({
-    super.key,
-    required this.tab1Controller,
-  }) ;
+  const SelectedAddress({super.key, required this.tab1Controller});
 
   final Tab1Controller tab1Controller;
 

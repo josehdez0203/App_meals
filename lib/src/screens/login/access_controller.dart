@@ -62,6 +62,7 @@ class AccessController with ChangeNotifier {
     }
     prefs.user = user;
     prefs.token = user.token;
+    prefs.setDefaultRole(user.roles);
     return user;
   }
 
@@ -86,6 +87,7 @@ class AccessController with ChangeNotifier {
       }
       prefs.user = user;
       prefs.token = user.token;
+      prefs.setDefaultRole(user.roles);
       return CodeError.none;
     } else if (decodedResp.containsKey('codeError')) {
       return decodedResp['codeError'];

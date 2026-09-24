@@ -18,8 +18,11 @@ class Tab1Controller with ChangeNotifier {
 
   MarketService marketService = MarketService();
 
-  CategoryModel _selectedCategory =
-      CategoryModel(id: 0, name: 'All', image: kImageCategoryAll);
+  CategoryModel _selectedCategory = CategoryModel(
+    id: 0,
+    name: 'All',
+    image: kImageCategoryAll,
+  );
 
   Tab1Controller() {
     categories.add(_selectedCategory);
@@ -42,7 +45,9 @@ class Tab1Controller with ChangeNotifier {
 
   load() async {
     loadCategories();
+    debugPrint('categories:, ${categories[0].name}');
     loadCompanies();
+    debugPrint('companies:, $companies');
   }
 
   loadCompanies({String filter = ''}) async {
@@ -52,14 +57,19 @@ class Tab1Controller with ChangeNotifier {
     inAsyncCall = true;
 
     MarketCompaniesResponse response = await marketService.getCompanies(
-        selectedCategory, address.location.x, address.location.y,
-        filter: filter);
+      selectedCategory,
+      address.location.x,
+      address.location.y,
+      filter: filter,
+    );
 
-    final List<ProductModel> productsCart =
-        await DBProvider.db.loadProducts(TypesCompany.store);
+    final List<ProductModel> productsCart = await DBProvider.db.loadProducts(
+      TypesCompany.store,
+    );
     for (var product in response.products) {
-      final int index = productsCart
-          .indexWhere((productCart) => productCart.id == product.id);
+      final int index = productsCart.indexWhere(
+        (productCart) => productCart.id == product.id,
+      );
       if (index >= 0) product.isInCart = true;
     }
 
@@ -72,10 +82,7 @@ class Tab1Controller with ChangeNotifier {
 
   filterCompanies(String filter) {
     fecha2 = DateTime.now();
-    Future.delayed(
-      const Duration(milliseconds: 1100),
-      () => evaluate(filter),
-    );
+    Future.delayed(const Duration(milliseconds: 1100), () => evaluate(filter));
   }
 
   evaluate(String filter) {
@@ -87,12 +94,17 @@ class Tab1Controller with ChangeNotifier {
 
   loadCategories() async {
     AddressModel? address = await DBProvider.db.loadAddress();
+    debugPrint('address: $address');
     if (address == null) return;
 
     categories = await marketService.getCategories(
-        address.location.x, address.location.y);
+      address.location.x,
+      address.location.y,
+    );
     categories.insert(
-        0, CategoryModel(id: 0, name: 'All', image: kImageCategoryAll));
+      0,
+      CategoryModel(id: 0, name: 'All', image: kImageCategoryAll),
+    );
   }
 
   setProducts(ProductModel product) {

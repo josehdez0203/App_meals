@@ -1,4 +1,5 @@
 import 'package:app_meals/constants/constants.dart';
+import 'package:app_meals/constants/types_constant.dart';
 
 class OrderModel {
   OrderModel({
@@ -44,7 +45,10 @@ class OrderModel {
             json["products"].map((x) => Product.fromJson(x))),
         deliveryFee: json["deliveryFee"].toDouble(),
         total: json["total"].toDouble(),
-        start: Location.fromJson(json["start"]),
+        // La API no manda `start`: el punto de recogida es la tienda. Si
+        // tampoco viniera su ubicacion se usa 0,0 en vez de reventar.
+        start: Location.fromJson(
+            json["start"] ?? json["store"]?["location"] ?? {'x': 0.0, 'y': 0.0}),
         location: Location.fromJson(json["location"]),
         createdAt: DateTime.parse(json["createdAt"]),
         store: Store.fromJson(json["store"]),
@@ -201,7 +205,10 @@ class Company {
   factory Company.fromJson(Map<String, dynamic> json) => Company(
         image: json["image"],
         marker: json["marker"],
-        type: json["type"],
+        // La API solo manda image y marker de la empresa; sin el valor por
+        // defecto el parseo del pedido fallaba con "type 'Null' is not a
+        // subtype of type 'int'".
+        type: json["type"] ?? TypesCompany.store,
       );
 
   Map<String, dynamic> toJson() => {
