@@ -1,8 +1,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Red: API propia y Firebase. Faltaba en el manifiesto principal, asi que
+         los builds de release se quedaban sin INTERNET (solo estaba declarado en
+         los manifiestos de debug y profile). -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Ubicacion: LocationBloc pide el permiso en runtime. Sin declararlo aqui
+         geolocator avisa y la peticion no puede concederse. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!-- Notificaciones en Android 13+: la app pide el permiso en runtime desde
+         PushProvider (Firebase Messaging) y usa notificaciones locales. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <application
         android:label="app_meals"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -43,6 +59,21 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- url_launcher (lib/src/common/launch.dart): llamada telefonica,
+             WhatsApp y navegacion. Android 11+ exige declarar los esquemas que
+             la app quiere poder abrir. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="tel"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.DIAL"/>
+            <data android:scheme="tel"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
         </intent>
     </queries>
 </manifest>

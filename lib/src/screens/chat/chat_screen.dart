@@ -23,7 +23,9 @@ class ChatScreen extends StatelessWidget {
           orderId: chatModel.orderId, toId: chatModel.toUser.id, myRol: myRol),
       child: Consumer<ChatController>(
         builder: (context, chatController, child) => PopScope(
-          onPopInvoked: (didPop) async {
+          // Forma no deprecada: es la que acompaña al gesto "atras" predictivo
+          // que habilita android:enableOnBackInvokedCallback en el manifiesto.
+          onPopInvokedWithResult: (didPop, result) async {
             chatController.markAllRead();
             if (myRol == TypesRol.client) {
               Provider.of<Tab2Controller>(context, listen: false)

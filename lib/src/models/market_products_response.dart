@@ -12,8 +12,12 @@ class MarketProductsResponse {
 
   factory MarketProductsResponse.fromJson(Map<String, dynamic> json) =>
       MarketProductsResponse(
-        groups: List<GroupModel>.from(
-            json["groups"].map((x) => GroupModel.fromJson(x))),
+        // La API no devuelve `groups`; sin la lista vacia el parseo fallaba al
+        // abrir una tienda.
+        groups: json["groups"] == null
+            ? []
+            : List<GroupModel>.from(
+                json["groups"].map((x) => GroupModel.fromJson(x))),
         products: List<ProductModel>.from(
             json["products"].map((x) => ProductModel.fromJson(x))),
       );

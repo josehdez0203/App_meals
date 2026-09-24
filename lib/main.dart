@@ -56,9 +56,18 @@ class MyApp extends StatelessWidget {
         : address == null
         ? 'welcome'
         : 'tabs';
-    if (pref.user.roles.contains(TypesRol.deliveryman)) {
+    // La pantalla inicial depende del rol activo (el que se elige en el menu
+    // "Cambiar rol"). Si todavia no se eligio, se usa el rol de mayor prioridad
+    // del usuario. Los parentesis explicitan la precedencia de && sobre ||.
+    final activeRole = pref.activeRole;
+    if ((pref.user.roles.contains(activeRole) &&
+            activeRole == TypesRol.deliveryman) ||
+        (activeRole == null &&
+            pref.user.roles.contains(TypesRol.deliveryman))) {
       initialRoute = 'petitions';
-    } else if (pref.user.roles.contains(TypesRol.manager)) {
+    } else if ((pref.user.roles.contains(activeRole) &&
+            activeRole == TypesRol.manager) ||
+        (activeRole == null && pref.user.roles.contains(TypesRol.manager))) {
       initialRoute = 'requests';
     }
     pref.locale = Platform.localeName;

@@ -100,6 +100,56 @@ class S {
     );
   }
 
+  /// `New category`
+  String get bNewCategory {
+    return Intl.message(
+      'New category',
+      name: 'bNewCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit category`
+  String get tEditCategory {
+    return Intl.message(
+      'Edit category',
+      name: 'tEditCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category name`
+  String get hCategoryName {
+    return Intl.message(
+      'Category name',
+      name: 'hCategoryName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Image (URL)`
+  String get hCategoryImage {
+    return Intl.message(
+      'Image (URL)',
+      name: 'hCategoryImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No categories yet`
+  String get mNoCategories {
+    return Intl.message(
+      'No categories yet',
+      name: 'mNoCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Filter by category`
   String get sTCategory {
     return Intl.message(
@@ -225,6 +275,16 @@ class S {
     return Intl.message(
       'Notifications',
       name: 'tNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change role`
+  String get tChangeRole {
+    return Intl.message(
+      'Change role',
+      name: 'tChangeRole',
       desc: '',
       args: [],
     );
@@ -425,6 +485,16 @@ class S {
     return Intl.message(
       'Deliveryman',
       name: 'lDeliveryman',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manager`
+  String get lManager {
+    return Intl.message(
+      'Manager',
+      name: 'lManager',
       desc: '',
       args: [],
     );

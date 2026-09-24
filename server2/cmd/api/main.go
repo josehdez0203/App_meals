@@ -15,6 +15,7 @@ import (
 	"appmeals/api/internal/auth"
 	"appmeals/api/internal/config"
 	"appmeals/api/internal/database"
+	"appmeals/api/internal/integrations"
 	"appmeals/api/internal/store"
 )
 
@@ -43,7 +44,8 @@ func main() {
 	}
 	defer pool.Close()
 
-	app := api.New(cfg, store.New(pool), pool, auth.NewManager(cfg.JWTSecret))
+	app := api.New(cfg, store.New(pool), pool, auth.NewManager(cfg.JWTSecret)).
+		WithGeocoder(integrations.NewGoogleGeocoder(cfg.GoogleAPIKey))
 
 	srv := &http.Server{
 		Addr:              cfg.Address,

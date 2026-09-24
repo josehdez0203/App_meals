@@ -19,7 +19,7 @@ const kImageClientDefault =
     'https://firebasestorage.googleapis.com/v0/b/resources-a24a1.appspot.com/o/category%2F113.png?alt=media';
 
 const kImageCategoryAll =
-    'https://firebasestorage.googleapis.com/v0/b/resources-a24a1.appspot.com/o/category%2F113.png?alt=media';
+    'https://firebasestorage.googleapis.com/v0/b/entregas-f31f4.firebasestorage.app/o/categories%2Fmeals.jpg?alt=media&token=13f1ef31-505f-41cd-abb1-69892043972e';
 
 // const kSokect = 'http://delivery.jhc-sistemas.com';
 // const kDomain = 'http://delivery.jhc-sistemas.com/api/';
@@ -40,6 +40,7 @@ const klongitudeMap = -102.7190595;
 const kTargetWidthUser = 220;
 const kTargetWidthStore = 470;
 const kTargetWidthProduct = 440;
+const kTargetWidthCategory = 440;
 
 const kMaximumDistanceStoreStartingPoint = 11111;
 const kMinimumTravelDistance = 300;

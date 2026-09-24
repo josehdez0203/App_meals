@@ -27,7 +27,9 @@ class CartSummaryModel {
         "note": address.alias.trim(),
         "address": address.address.trim(),
         "products": List<dynamic>.from(products.map((x) => x.toJson())),
-        "start": Location(x: fee.fromlt, y: fee.fromlg).toJson(),
+        // No se envia "start": la API no lo acepta (OrderMarketDto no lo tiene
+        // y el ValidationPipe rechaza propiedades desconocidas con 400). El
+        // punto de recogida se deduce de la tienda del pedido.
         "location": address.location.toJson(), //Destination
         "total": double.parse(total.toStringAsFixed(kCoinDecimals)),
         "deliveryFee":

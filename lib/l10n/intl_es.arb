@@ -6,6 +6,11 @@
     "sFeatured": "Las personas los aman",
 
     "tCategories": "Categorias",
+    "bNewCategory": "Nueva categoría",
+    "tEditCategory": "Editar categoría",
+    "hCategoryName": "Nombre de la categoría",
+    "hCategoryImage": "Imagen (URL)",
+    "mNoCategories": "No hay categorías registradas",
     "sTCategory": "Filtrar por categoria",
 
     "tCompanyTop": "Los mejor valorados",
@@ -23,6 +28,7 @@
     "tRegisterStore": "Registra tu tienda",
     "tTopUpBalance": "Recarga de saldo",
     "tNotifications": "Notificaciones",
+    "tChangeRole": "Cambiar rol",
 
     "tab1": "Tiendas",
     "tab2": "En camino",
@@ -42,7 +48,8 @@
     "tOpeningTime" : "HORA DE APERTURA",
     "tClosingTime" : "HORA DE CIERRE",
 
-    "lDeliveryFee": "Envío",
+    "lDeliveryFee": "Envío", 
+    "lManager": "Manager",
     "lAddedCart": "Agregado al carrito",
     "lOrderBy": "Orden a cargo de",
     "lDeliveryman": "Repartidor",

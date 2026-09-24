@@ -27,8 +27,10 @@ class FeeModel {
         storeId: json["store_id"],
         companyId: json["companyId"],
         deliveryfee: json["deliveryfee"].toDouble(),
-        fromlt: double.parse(json["fromlt"].toString()),
-        fromlg: double.parse(json["fromlg"].toString()),
+        // La API no devuelve fromlt/fromlg (la ubicacion de la tienda no viene
+        // en la tarifa); antes reventaba con FormatException al parsear "null".
+        fromlt: double.tryParse(json["fromlt"]?.toString() ?? '') ?? 0.0,
+        fromlg: double.tryParse(json["fromlg"]?.toString() ?? '') ?? 0.0,
       );
 
   Map<String, dynamic> toJson() => {

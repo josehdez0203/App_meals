@@ -56,7 +56,10 @@ class _Category extends StatelessWidget {
               child: AvatarImage(image: category.image),
             ),
             const SizedBox(height: 2),
-            Text(category.name),
+            Text(
+              category.name,
+              style: const TextStyle(fontSize: 12, color: Colors.blueGrey),
+            ),
           ],
         ),
       ),
@@ -68,10 +71,11 @@ class _Category extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-                splashColor: Colors.blueAccent.withValues(alpha: (0.6 * 255)),
-                onTap: () {
-                  tab1Controller.selectedCategory = category;
-                }),
+              splashColor: Colors.blueAccent.withValues(alpha: (0.6 * 255)),
+              onTap: () {
+                tab1Controller.selectedCategory = category;
+              },
+            ),
           ),
         ),
       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:app_meals/constants/constants.dart';
+import 'package:app_meals/constants/types_constant.dart';
 import 'package:app_meals/src/models/user_model.dart';
 import 'package:app_meals/src/provider/db_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,6 +54,7 @@ class PreferencesProvider {
 
   clean() {
     token = '';
+    preferences?.remove('activeRole');
     user = UserModel(
         id: 0,
         email: 'guest@${kNameApp.toLowerCase()}.com',
@@ -85,6 +87,31 @@ class PreferencesProvider {
 
   set token(String? value) {
     if (preferences != null) preferences!.setString('token', value!);
+  }
+
+  String? get activeRole {
+    return preferences?.getString('activeRole');
+  }
+
+  set activeRole(String? value) {
+    if (preferences == null) return;
+    if (value == null) {
+      preferences!.remove('activeRole');
+    } else {
+      preferences!.setString('activeRole', value);
+    }
+  }
+
+  void setDefaultRole(List<String> roles) {
+    if (roles.contains(TypesRol.deliveryman)) {
+      activeRole = TypesRol.deliveryman;
+    } else if (roles.contains(TypesRol.manager)) {
+      activeRole = TypesRol.manager;
+    } else if (roles.contains(TypesRol.client)) {
+      activeRole = TypesRol.client;
+    } else {
+      activeRole = roles.isEmpty ? null : roles.first;
+    }
   }
 
   String? get tokenPush {

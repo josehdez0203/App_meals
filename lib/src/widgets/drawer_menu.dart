@@ -6,11 +6,15 @@ import 'package:app_meals/generated/l10n.dart';
 import 'package:app_meals/src/provider/preferences_provider.dart';
 import 'package:app_meals/src/screens/about/about_screen.dart';
 import 'package:app_meals/src/screens/addresses/addresses_screen.dart';
+import 'package:app_meals/src/screens/admin/category/category_screen.dart';
 import 'package:app_meals/src/screens/admin/credit/credit_screen.dart';
 import 'package:app_meals/src/screens/manager/company/company_screen.dart';
 import 'package:app_meals/src/screens/manager/enrollment/enrollment_screen.dart';
 import 'package:app_meals/src/screens/notification/notification_screen.dart';
 import 'package:app_meals/src/screens/profile/profile_screen.dart';
+import 'package:app_meals/src/screens/deliveryman/petitions/petitions_screen.dart';
+import 'package:app_meals/src/screens/main/tab_main_screen.dart';
+import 'package:app_meals/src/screens/manager/requests/requests_screen.dart';
 import 'package:app_meals/src/widgets/avatar_image.dart';
 
 class DraweMenu extends StatelessWidget {
@@ -46,6 +50,23 @@ class DraweMenu extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => CreditScreen()));
+                        }),
+                  ),
+                ),
+                Visibility(
+                  visible: pref.user.roles.contains(TypesRol.admin),
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: ListTile(
+                        leading: const Icon(Icons.category_outlined,
+                            color: kPrimaryColor),
+                        title: Text(S.of(context).tCategories),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const CategoryScreen()));
                         }),
                   ),
                 ),
@@ -92,6 +113,24 @@ class DraweMenu extends StatelessWidget {
                                 builder: (context) => AddressesScreen()));
                       }),
                 ),
+                if (pref.user.roles.length > 1)
+                  Container(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: ListTile(
+                      leading: const Icon(Icons.switch_account_outlined,
+                          color: kPrimaryColor),
+                      title: Text(S.of(context).tChangeRole),
+                      onTap: () {
+                        // El Navigator se captura ANTES de cerrar el drawer: al
+                        // terminar su animacion de cierre el contexto del menu
+                        // queda desmontado, y cualquier Navigator.of(context)
+                        // posterior se cancelaria en silencio.
+                        final navigator = Navigator.of(context);
+                        Navigator.pop(context);
+                        _showRoleSelector(navigator);
+                      },
+                    ),
+                  ),
               ],
             ),
           ),
@@ -99,6 +138,55 @@ class DraweMenu extends StatelessWidget {
         Footer(pref)
       ],
     ));
+  }
+
+  Future<void> _showRoleSelector(NavigatorState navigator) async {
+    final role = await showModalBottomSheet<String>(
+      // Se usa el contexto del Navigator (siempre montado) en lugar del del
+      // drawer, que ya no existe cuando el usuario elige.
+      context: navigator.context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: pref.user.roles
+              .map(
+                (role) => ListTile(
+                  leading: Icon(_roleIcon(role), color: kPrimaryColor),
+                  title: Text(_roleLabel(context, role)),
+                  onTap: () => Navigator.pop(context, role),
+                ),
+              )
+              .toList(),
+        ),
+      ),
+    );
+
+    if (role == null) return;
+    pref.activeRole = role;
+    // pushAndRemoveUntil reemplaza la pantalla actual por la del rol elegido.
+    navigator.pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => _screenForRole(role)),
+      (_) => false,
+    );
+  }
+
+  Widget _screenForRole(String role) {
+    if (role == TypesRol.deliveryman) return const PetitionsScreen();
+    if (role == TypesRol.manager) return const RequestsScreen();
+    return const TabMainScreen();
+  }
+
+  String _roleLabel(BuildContext context, String role) {
+    if (role == TypesRol.client) return S.of(context).lClient;
+    if (role == TypesRol.deliveryman) return S.of(context).lDeliveryman;
+    if (role == TypesRol.manager) return S.of(context).lManager;
+    return role;
+  }
+
+  IconData _roleIcon(String role) {
+    if (role == TypesRol.deliveryman) return Icons.delivery_dining;
+    if (role == TypesRol.manager) return Icons.storefront_outlined;
+    return Icons.person_outline;
   }
 }
 
